@@ -102,10 +102,6 @@ def atualizar_interface():
                 celulas[i][j].config(bg="lightgray", text=estado)
     # Atualizar pontuação
     lbl_performance.config(text=f"Performance: {performance}")
-    if ambiente_limpo():
-        lbl_status.config(text="Status: Ambiente Limpo!")
-    else:
-        lbl_status.config(text="Status: Ambiente Sujo!")
 
 # ------------------ Interface Gráfica ------------------
 
@@ -137,10 +133,6 @@ def criar_interface():
     lbl_performance = tk.Label(root, text="Performance: 0", font=("Arial", 12))
     lbl_performance.grid(row=linhas + 1, column=0, columnspan=colunas // 2)
 
-    # Label de status
-    global lbl_status
-    lbl_status = tk.Label(root, text="Status: Ambiente Sujo!", font=("Arial", 12))
-    lbl_status.grid(row=linhas + 1, column=colunas // 2, columnspan=colunas // 2)
 
     # Menu de seleção do modelo
     lbl_modelo = tk.Label(root, text="Modelo:", font=("Arial", 12))
