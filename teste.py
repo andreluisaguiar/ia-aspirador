@@ -5,7 +5,7 @@ import random
 
 linhas, colunas = 5, 5
 estado_ambiente = [[random.choice(["Sujo", "Limpo"]) for _ in range(colunas)] for _ in range(linhas)]
-posicao_agente = (0, 0)  # Linha e coluna iniciais do agente
+posicao_agente = (0, 0)
 performance = 0
 
 # ------------------ Funções do Ambiente ------------------
@@ -75,20 +75,20 @@ def agente_tabela(percepcao):
         return "Baixo"
     return random.choice(["Direita", "Esquerda", "Cima", "Baixo"])
 
-# Modelo Baseado em Histórico (Modelo)
-modelo_agente = [[None for _ in range(colunas)] for _ in range(linhas)]
+# Modelo Baseado em Histórico
+# modelo_agente = [[None for _ in range(colunas)] for _ in range(linhas)]
 
-def agente_modelo(percepcao):
-    global modelo_agente
-    linha, coluna, estado = percepcao
-    modelo_agente[linha][coluna] = estado
+# def agente_modelo(percepcao):
+#     global modelo_agente
+#     linha, coluna, estado = percepcao
+#     modelo_agente[linha][coluna] = estado
 
-    if all(celula == "Limpo" for linha in modelo_agente for celula in linha if celula is not None):
-        return "Nada"
-    elif estado == "Sujo":
-        return "Aspire"
-    else:
-        return random.choice(["Cima", "Baixo", "Esquerda", "Direita"])
+#     if all(celula == "Limpo" for linha in modelo_agente for celula in linha if celula is not None):
+#         return "Nada"
+#     elif estado == "Sujo":
+#         return "Aspire"
+#     else:
+#         return random.choice(["Cima", "Baixo", "Esquerda", "Direita"])
 
 # ------------------ Atualização da Interface ------------------
 
@@ -97,7 +97,7 @@ def atualizar_interface():
         for j in range(colunas):
             estado = estado_ambiente[i][j]
             if (i, j) == posicao_agente:
-                celulas[i][j].config(bg="blue", text=f"{estado}\nAgente")
+                celulas[i][j].config(bg="red", text=f"{estado}\nAspirador")
             else:
                 celulas[i][j].config(bg="lightgray", text=estado)
     # Atualizar pontuação
@@ -146,7 +146,7 @@ def criar_interface():
     lbl_modelo = tk.Label(root, text="Modelo:", font=("Arial", 12))
     lbl_modelo.grid(row=linhas + 2, column=0, columnspan=1)
 
-    menu_modelo = tk.OptionMenu(root, modelo_var, "Aleatorio", "Reflexivo", "Baseado em Modelo", "Baseado em Tabela")
+    menu_modelo = tk.OptionMenu(root, modelo_var, "Aleatorio", "Reflexivo", "Modelo", "Tabela")
     menu_modelo.grid(row=linhas + 2, column=1, columnspan=colunas - 1)
 
     # Inicializar o ambiente
@@ -167,10 +167,10 @@ def executar_proxima_acao():
         acao = agente_aleatorio(percepcao)
     elif modelo == "Reflexivo":
         acao = agente_reflexivo(percepcao)
-    elif modelo == "Baseado em Modelo":
-        acao = agente_modelo(percepcao)
-    elif modelo == "Baseado em Tabela":
+    elif modelo == "Tabela":
         acao = agente_tabela(percepcao)
+    # elif modelo == "Modelo":
+    #     acao = agente_modelo(percepcao)
 
     # Executar a ação
     executar_acao(acao)
